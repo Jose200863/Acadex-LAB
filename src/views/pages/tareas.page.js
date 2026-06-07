@@ -14,8 +14,35 @@ function obtenerBadgePrioridad(prioridad) {
   return "bg-secondary";
 }
 
-export function tareasPage(tareas) {
+export function tareasPage(tareas, mensaje) {
+  let alerta = "";
+
+  if (mensaje === "creada") {
+    alerta = `
+      <div class="alert alert-success">
+        Tarea creada correctamente.
+      </div>
+    `;
+  }
+
+  if (mensaje === "actualizada") {
+    alerta = `
+      <div class="alert alert-warning">
+        Tarea actualizada correctamente.
+      </div>
+    `;
+  }
+
+  if (mensaje === "eliminada") {
+    alerta = `
+      <div class="alert alert-danger">
+        Tarea eliminada correctamente.
+      </div>
+    `;
+  }
+
   let contenido = `
+   ${alerta}
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h1>Lista de tareas</h1>
       <a href="/tareas/nueva" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Nueva tarea</a> 
