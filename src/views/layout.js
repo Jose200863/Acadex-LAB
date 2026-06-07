@@ -1,4 +1,7 @@
 export function layout(titulo, contenido) {
+
+  const anioActual = new Date().getFullYear();
+
   return `
     <!DOCTYPE html>
     <html lang="es">
@@ -14,24 +17,63 @@ export function layout(titulo, contenido) {
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     </head>
 
-    <body class="bg-light">
+    
+
+    <body class="d-flex flex-column min-vh-100">
 
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-        <div class="container">
-          <a class="navbar-brand" href="/"><i class="bi bi-list-task"> Plataforma de Tareas</i></a>
+      <div class="container-fluid">
 
-          <div class="navbar-nav">
-            <a class="nav-link" href="/"><i class="bi bi-house-fill"> Inicio</i></a>
-            <a class="nav-link" href="/tareas"><i class="bi bi-list-task"> Tareas</i></a>
-            <a class="nav-link" href="/tareas/nueva"><i class="bi bi-plus"> Nueva tarea</i></a>
-            <a class="nav-link" href="/tareas/resumen"><i class="bi bi-bar-chart-fill"> Resumen</i></a>
-          </div>
-        </div>
-      </nav>
+    <a class="navbar-brand" href="/">
+      <i class="bi bi-list-task"></i> Plataforma de Tareas
+    </a>
 
-      <main class="container">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/">
+          <i class="bi bi-house-fill"></i> Inicio
+        </a>
+
+        <a class="nav-link" href="/tareas">
+          <i class="bi bi-list-task"></i> Tareas
+        </a>
+
+        <a class="nav-link" href="/tareas/nueva">
+          <i class="bi bi-plus"></i> Nueva tarea
+        </a>
+
+        <a class="nav-link" href="/tareas/resumen">
+          <i class="bi bi-bar-chart-fill"></i> Resumen
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</nav>
+
+      <main class="container mt-4 flex-grow-1">
         ${contenido}
       </main>
+
+      <footer class="bg-primary text-white text-center py-5">
+  <div class="container">
+    Acadex v1.0 © ${anioActual}
+  </div>
+  </footer>
 
       <script 
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">

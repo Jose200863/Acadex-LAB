@@ -51,6 +51,24 @@ export function mostrarFormularioNuevaTarea(req, res) {
 }
 
 export function crearTarea(req, res) {
+
+  const errores = {};
+
+  if (!req.body.titulo || req.body.titulo.trim() === "") {
+    errores.titulo = "El título es obligatorio";
+  }
+
+  if (!req.body.descripcion || req.body.descripcion.trim().length < 10) {
+    errores.descripcion =
+      "La descripción debe tener al menos 10 caracteres";
+  }
+
+  if (Object.keys(errores).length > 0) {
+    return res.send(
+      nuevaTareaPage(errores, req.body)
+    );
+  }
+
   const nuevaTarea = {
     id: tareas.length + 1,
     titulo: req.body.titulo,
@@ -83,24 +101,44 @@ export function mostrarFormularioEditarTarea(req, res) {
 }
 
 export function actualizarTarea(req, res) {
-  const id = Number(req.params.id);
+    const id = Number(req.params.id);
 
-  const tarea = tareas.find(
-    tarea => tarea.id === id
-  );
+    const tarea = tareas.find(t => t.id === id);
 
-  if (!tarea) {
-    return res
-      .status(404)
-      .send(error404Page());
-  }
+    if (!tarea) {
+        return res.status(404).send(error404Page());
+    }
 
-  tarea.titulo = req.body.titulo;
-  tarea.descripcion = req.body.descripcion;
-  tarea.estado = req.body.estado;
-  tarea.prioridad = req.body.prioridad;
+    const errores = {};
 
-  res.redirect("/tareas?mensaje=actualizada");
+    if (!req.body.titulo || req.body.titulo.trim() === "") {
+        errores.titulo = "El título es obligatorio.";
+    }
+
+    if (
+        !req.body.descripcion ||
+        req.body.descripcion.trim().length < 10
+    ) {
+        errores.descripcion =
+            "La descripción debe tener al menos 10 caracteres.";
+    }
+
+    if (Object.keys(errores).length > 0) {
+        return res.send(
+            editarTareaPage(
+                tarea,
+                errores,
+                req.body
+            )
+        );
+    }
+
+    tarea.titulo = req.body.titulo;
+    tarea.descripcion = req.body.descripcion;
+    tarea.estado = req.body.estado;
+    tarea.prioridad = req.body.prioridad;
+
+    res.redirect("/tareas?mensaje=actualizada");
 }
 
 export function eliminarTarea(req, res) {
